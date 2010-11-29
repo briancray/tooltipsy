@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>tooltipsy sample</title>
+	<meta name="robots" content="none">
+	<style type="text/css">
+	#tooltipsy {                                                                                                                                                                                                                  
+		padding: 10px;
+		max-width: 200px;
+		color: #303030;
+		background-color: #f5f5b5;
+		border: 1px solid #DECA7E;
+	}
+	</style>
+</head>
+<body>
+<p>For the first 3 samples this page uses the following CSS:</p>
+<pre>
+#tooltipsy {                                                                                                                                                                                                                  
+	padding: 10px;
+	max-width: 200px;
+	color: #303030;
+	background-color: #f5f5b5;
+	border: 1px solid #DECA7E;
+}</pre>
+
+<h4>Easiest use</h4>
+<p><a id="usetitle" href="http://tooltipsy.com/" title="Hi, I was discovered in the title attribute">tooltipsy uses my title attribute</a></p>
+<pre>
+$('#usetitle').tooltipsy();
+</pre>
+
+<h4>Custom content</h4>
+<p><a id="usecontent" href="http://tooltipsy.com/" title="I have a title attribute, but tooltipsy is using custom content">tooltipsy is providing custom content</a></p>
+<pre>
+$('#usecontent').tooltipsy({content: '&lt;em&gt;Look ma&lt;/em&gt;, I\'m custom content with &lt;strong&gt;HTML&lt;/strong&gt;'});
+</pre>
+
+<h4>Custom animation</h4>
+<p><a id="useanimation" href="http://tooltipsy.com/" title="Like my custom effects?">tooltipsy using custom effects</a></p>
+<pre>
+$('#useanimation').tooltipsy({
+	show: function (e, $el) {
+		$el.slideDown(100);
+	},
+	hide: function (e, $el) {
+		$el.slideUp(100);
+	}
+});
+</pre>
+
+<h4>All settings</h4>
+<p><a id="useall" href="http://tooltipsy.com/" title="I have a title attribute, but tooltipsy is using custom content">tooltipsy using all settings</a></p>
+<pre>
+$('#useall').tooltipsy({
+	offset: [0, -90], // tooltipsy directly above cursor
+	id: 'mytip', // use #mytip instead of #tooltipsy
+	content: '&lt;img src="tooltipsy.png"&gt;', // even use images
+	position: 'left', // force tooltipsy to the left of cursor
+	show: function (e, $el) { // custom show function
+		$el.show();
+	},
+	hide: function (e, $el) { // custom hide function
+		$el.hide();
+	}
+});
+</pre>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="../tooltipsy.source.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	$('#usetitle').tooltipsy();
+
+	$('#usecontent').tooltipsy({content: '<em>Look ma</em>, I\'m custom content with <strong>HTML</strong>'});
+
+	$('#useanimation').tooltipsy({
+		show: function (e, $el) {
+			$el.slideDown(100);
+		},
+		hide: function (e, $el) {
+			$el.slideUp(100);
+		}
+	});
+	
+	$('#useall').tooltipsy({
+		offset: [0, -90],
+		id: 'mytip',
+		content: '<img src="tooltipsy.png">',
+		position: 'left',
+		show: function (e, $el) {
+			$el.fadeIn(1000);
+		},
+		hide: function (e, $el) {
+			$el.fadeOut(1000);
+		}
+	});
+});
+</script>
+</body>
+</html>

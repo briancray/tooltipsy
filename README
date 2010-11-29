@@ -1,0 +1,13 @@
+tooltipsy by Brian Cray
+
+Lincensed under GPL2 - http://www.gnu.org/licenses/gpl-2.0.html
+
+Option quick reference:
+  - offset: Tooltipsy distance from mouse cursor as array [x, y]. Defaults to [10, 10]
+  - id: DOM ID attached to tooltipsy instance. Defaults to "tooltipsy"
+  - content: HTML or text content of tooltipsy. Defaults to "" (empty string), which pulls content from target element's title attribute
+  - position: Position of tooltipsy relative to cursor - "Left", "right", or "auto". Defaults to "auto"
+  - show: Function(event, element) to show the tooltip. Defaults to jQuery's show(100) effect
+  - hide: Function(event, element) to hide the tooltip. Defaults to jQuery's fadeOut(100) effect
+
+More information visit http://tooltipsy.com/
