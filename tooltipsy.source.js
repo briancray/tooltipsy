@@ -52,7 +52,7 @@
             var tooltipsy = $thisel.data('tooltipsy');
             $thisel.data('title', $thisel.attr('title')).attr('title', '');
             $thisel.bind('mouseenter', function (e) {
-                var tip_position = [document.body.scrollLeft + e.pageX + tooltipsy.settings.offset[0], document.body.scrollTop + e.pageY + tooltipsy.settings.offset[1]];
+                var tip_position = [e.pageX - document.body.scrollLeft + tooltipsy.settings.offset[0], e.pageY - document.body.scrollTop + tooltipsy.settings.offset[1]];
                 var tip_width = tooltipsy.$tip.stop().html(tooltipsy.settings.content != '' ? tooltipsy.settings.content : $thisel.data('title')).outerWidth();
                 if(tooltipsy.settings.position == 'left' || (tooltipsy.settings.position == 'auto' && tip_position[0] + tip_width > $(window).width())) {
                     var tip_css = {top: tip_position[1] + 'px', right: $(window).width() - tip_position[0] + 'px', left: 'auto'};
