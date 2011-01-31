@@ -27,6 +27,25 @@
             else {
                 base.$tip = $('<div id="' + base.settings.id + '">').appendTo('body').css({position: 'fixed', zIndex: '999'}).hide();
             }
+            
+            base.$el.data('title', base.$el.attr('title')).attr('title', '');
+            
+            base.$el.bind('mouseenter', function (e) {
+                var tip_position = [e.pageX - window.pageXOffset + base.settings.offset[0], e.pageY - window.pageYOffset + base.settings.offset[1]];
+                var tip_width = base.$tip.stop().html(base.settings.content != '' ? base.settings.content : base.$el.data('title')).outerWidth();
+                if(base.settings.position == 'left' || (base.settings.position == 'auto' && tip_position[0] + tip_width > $(window).width())) {
+                    var tip_css = {top: tip_position[1] + 'px', right: $(window).width() - tip_position[0] + 'px', left: 'auto'};
+                }
+                else {
+                    var tip_css = {top: tip_position[1] + 'px', left: tip_position[0] + 'px', right: 'auto'};
+                }
+                
+                base.$tip.css(tip_css);
+                base.settings.show(e, base.$tip);
+            }).bind('mouseleave', function (e) {
+                base.$tip.stop(true, true);
+                base.settings.hide(e, base.$tip);
+            });
         };
 
         base.init();
@@ -48,25 +67,6 @@
     $.fn.tooltipsy = function(options) {
         return this.each(function() {
             new $.tooltipsy(this, options);
-            var $thisel = $(this);
-            var tooltipsy = $thisel.data('tooltipsy');
-            $thisel.data('title', $thisel.attr('title')).attr('title', '');
-            $thisel.bind('mouseenter', function (e) {
-                var tip_position = [e.pageX - document.body.scrollLeft + tooltipsy.settings.offset[0], e.pageY - document.body.scrollTop + tooltipsy.settings.offset[1]];
-                var tip_width = tooltipsy.$tip.stop().html(tooltipsy.settings.content != '' ? tooltipsy.settings.content : $thisel.data('title')).outerWidth();
-                if(tooltipsy.settings.position == 'left' || (tooltipsy.settings.position == 'auto' && tip_position[0] + tip_width > $(window).width())) {
-                    var tip_css = {top: tip_position[1] + 'px', right: $(window).width() - tip_position[0] + 'px', left: 'auto'};
-                }
-                else {
-                    var tip_css = {top: tip_position[1] + 'px', left: tip_position[0] + 'px', right: 'auto'};
-                }
-                
-                tooltipsy.$tip.css(tip_css);
-                tooltipsy.settings.show(e, tooltipsy.$tip);
-            }).bind('mouseleave', function (e) {
-                tooltipsy.$tip.stop(true, true);
-                tooltipsy.settings.hide(e, tooltipsy.$tip);
-            });
         });
     };
 
