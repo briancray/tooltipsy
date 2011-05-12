@@ -3,11 +3,11 @@ tooltipsy by Brian Cray
 Lincensed under GPL2 - http://www.gnu.org/licenses/gpl-2.0.html
 
 Option quick reference:
-  - offset: Tooltipsy distance from mouse cursor as array [x, y]. Defaults to [10, 10]
-  - id: DOM ID attached to tooltipsy instance. Defaults to "tooltipsy"
-  - content: HTML or text content of tooltipsy. Defaults to "" (empty string), which pulls content from target element's title attribute
-  - position: Position of tooltipsy relative to cursor - "Left", "right", or "auto". Defaults to "auto"
-  - show: Function(event, element) to show the tooltip. Defaults to jQuery's show(100) effect
-  - hide: Function(event, element) to hide the tooltip. Defaults to jQuery's fadeOut(100) effect
+- offset: Tooltipsy distance from element or mouse cursor, dependent on alignTo setting. Set as array [x, y] (Defaults to [0, -1])
+- alignTo: "element" or "cursor" (Defaults to "element")
+- className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
+- content: HTML or text content of tooltip. Defaults to "" (empty string), which pulls content from target element's title attribute
+- show: function(event, tooltip) to show the tooltip. Defaults to a show(100) effect
+- hide: function(event, tooltip) to hide the tooltip. Defaults to a fadeOut(100) effect
 
 More information visit http://tooltipsy.com/
