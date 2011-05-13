@@ -51,7 +51,7 @@
 
                 if (base.settings.alignTo == 'cursor') {
                     var tip_position = [e.pageX + base.settings.offset[0], e.pageY + base.settings.offset[1]];
-                    if(tip_position[0] + base.width > $(window).width())) {
+                    if(tip_position[0] + base.width > $(window).width()) {
                         var tip_css = {top: tip_position[1] + 'px', right: tip_position[0] + 'px', left: 'auto'};
                     }
                     else {
