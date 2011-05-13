@@ -1,12 +1,13 @@
 /* tooltipsy by Brian Cray
  * Lincensed under GPL2 - http://www.gnu.org/licenses/gpl-2.0.html
  * Option quick reference:
- *  - offset: Tooltipsy distance from element or mouse cursor, dependent on alignTo setting. Set as array [x, y] (Defaults to [0, -1])
  *  - alignTo: "element" or "cursor" (Defaults to "element")
- *  - className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
+ *  - offset: Tooltipsy distance from element or mouse cursor, dependent on alignTo setting. Set as array [x, y] (Defaults to [0, -1])
  *  - content: HTML or text content of tooltip. Defaults to "" (empty string), which pulls content from target element's title attribute
  *  - show: function(event, tooltip) to show the tooltip. Defaults to a show(100) effect
  *  - hide: function(event, tooltip) to hide the tooltip. Defaults to a fadeOut(100) effect
+ *  - css: object containing CSS properties and values. Defaults to {} to use stylesheet for styles
+ *  - className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
  * More information visit http://tooltipsy.com/
  */
  
@@ -33,6 +34,17 @@
                     base.$el.attr('title', '');
                     base.$tipsy = $('<div id="tooltipsy' + base.random + '">').appendTo('body').css({position: 'fixed', zIndex: '999'}).hide();
                     base.$tip = $('<div class="' + base.settings.className + '">').appendTo(base.$tipsy).html(base.settings.content != '' ? base.settings.content : base.title);
+                    if ((function (o) {
+                        var s = 0, k;
+                        for (k in o) {
+                            if (o.hasOwnProperty(k)) {
+                                s++;
+                            }
+                        }
+                        return s;
+                    })(base.settings.css) > 0) {
+                        base.$tip.css(base.settings.css);
+                    }
                     base.width = base.$tipsy.outerWidth();
                     base.height = base.$tipsy.outerHeight();
                 }
@@ -87,16 +99,17 @@
     };
 
     $.tooltipsy.defaults = {
-        offset: [0, -1],
         alignTo: 'element',
-        className: 'tooltipsy',
+        offset: [0, -1],
         content: '',
         show: function (e, $el) {
             $el.css('opacity', '1').show(100);
         },
         hide: function (e, $el) {
             $el.fadeOut(100);
-        }
+        },
+        css: {},
+        className: 'tooltipsy'
     };
 
     $.fn.tooltipsy = function(options) {
