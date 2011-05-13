@@ -18,6 +18,7 @@
         base.$el = $(el);
         base.el = el;
         base.random = parseInt(Math.random()*10000);
+        base.ready = false;
         base.shown = false;
         base.width = 0;
         base.height = 0;
@@ -26,14 +27,16 @@
 
         base.init = function() {
             base.settings = $.extend({},$.tooltipsy.defaults, options);
+
+            if (typeof base.settings.content === 'function') {
+                base.readify(); 
+            }
             
             base.$el.bind('mouseenter', function (e) {
-                if (base.shown == false) {
-                    base.shown = true;
-                    base.title = base.$el.attr('title') || '';
-                    base.$el.attr('title', '');
-                    base.$tipsy = $('<div id="tooltipsy' + base.random + '">').appendTo('body').css({position: 'absolute', zIndex: '999'}).hide();
-                    base.$tip = $('<div class="' + base.settings.className + '">').appendTo(base.$tipsy).html(base.settings.content != '' ? base.settings.content : base.title);
+                if (base.ready === false) {
+                    base.readify();
+                }
+                if (base.shown === false) {
                     if ((function (o) {
                         var s = 0, k;
                         for (k in o) {
@@ -98,6 +101,14 @@
                 }
                 base.settings.hide(e, base.$tipsy.stop(true, true));
             });
+        };
+
+        base.readify = function () {
+            base.ready = true;
+            base.title = base.$el.attr('title') || '';
+            base.$el.attr('title', '');
+            base.$tipsy = $('<div id="tooltipsy' + base.random + '">').appendTo('body').css({position: 'absolute', zIndex: '999'}).hide();
+            base.$tip = $('<div class="' + base.settings.className + '">').appendTo(base.$tipsy).html(base.settings.content != '' ? base.settings.content : base.title);
         };
 
         base.init();
