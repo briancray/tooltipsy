@@ -56,7 +56,7 @@
                         })(base.$el.offset()),
                         (function (pos) {
                             if (base.settings.offset[1] < 0) {
-                                return (pos.top - window.pageYOffset) - base.$el.outerHeight() - base.height - Math.abs(base.settings.offset[1]);
+                                return (pos.top - window.pageYOffset) - Math.abs(base.settings.offset[1]) - base.height;
                             }
                             else if (base.settings.offset[1] == 0) {
                                 return (pos.top - window.pageYOffset) - ((base.height - base.$el.outerHeight()) / 2);
