@@ -32,7 +32,7 @@
                     base.shown = true;
                     base.title = base.$el.attr('title') || '';
                     base.$el.attr('title', '');
-                    base.$tipsy = $('<div id="tooltipsy' + base.random + '">').appendTo('body').css({position: 'fixed', zIndex: '999'}).hide();
+                    base.$tipsy = $('<div id="tooltipsy' + base.random + '">').appendTo('body').css({position: 'absolute', zIndex: '999'}).hide();
                     base.$tip = $('<div class="' + base.settings.className + '">').appendTo(base.$tipsy).html(base.settings.content != '' ? base.settings.content : base.title);
                     if ((function (o) {
                         var s = 0, k;
@@ -57,24 +57,24 @@
                     var tip_position = [
                         (function (pos) {
                             if (base.settings.offset[0] < 0) {
-                                return (pos.left - window.pageXOffset) - Math.abs(base.settings.offset[0]) - base.width;
+                                return pos.left - Math.abs(base.settings.offset[0]) - base.width;
                             }
                             else if (base.settings.offset[0] == 0) {
-                                return (pos.left - window.pageXOffset) - ((base.width - base.$el.outerWidth()) / 2);
+                                return pos.left - ((base.width - base.$el.outerWidth()) / 2);
                             }
                             else {
-                                return (pos.left - window.pageXOffset) + base.$el.outerWidth() + base.settings.offset[0];
+                                return pos.left + base.$el.outerWidth() + base.settings.offset[0];
                             }
                         })(base.$el.offset()),
                         (function (pos) {
                             if (base.settings.offset[1] < 0) {
-                                return (pos.top - window.pageYOffset) - Math.abs(base.settings.offset[1]) - base.height;
+                                return pos.top - Math.abs(base.settings.offset[1]) - base.height;
                             }
                             else if (base.settings.offset[1] == 0) {
-                                return (pos.top - window.pageYOffset) - ((base.height - base.$el.outerHeight()) / 2);
+                                return pos.top - ((base.height - base.$el.outerHeight()) / 2);
                             }
                             else {
-                                return (pos.top - window.pageYOffset) + base.$el.outerHeight() + base.settings.offset[1];
+                                return pos.top + base.$el.outerHeight() + base.settings.offset[1];
                             }
                         })(base.$el.offset())
                     ];
