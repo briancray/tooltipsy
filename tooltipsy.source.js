@@ -50,8 +50,13 @@
                 }
 
                 if (base.settings.alignTo == 'cursor') {
-                    var tip_position = [e.pageX - window.pageXOffset + base.settings.offset[0], e.pageY - window.pageYOffset + base.settings.offset[1]];
-                    var tip_css = {top: tip_position[1] + 'px', right: $(window).width() - tip_position[0] + 'px', left: 'auto'};
+                    var tip_position = [e.pageX + base.settings.offset[0], e.pageY + base.settings.offset[1]];
+                    if(tip_position[0] + base.width > $(window).width())) {
+                        var tip_css = {top: tip_position[1] + 'px', right: tip_position[0] + 'px', left: 'auto'};
+                    }
+                    else {
+                        var tip_css = {top: tip_position[1] + 'px', left: tip_position[0] + 'px', right: 'auto'};
+                    }
                 }
                 else {
                     var tip_position = [
