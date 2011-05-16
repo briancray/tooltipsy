@@ -108,7 +108,9 @@
             base.title = base.$el.attr('title') || '';
             base.$el.attr('title', '');
             base.$tipsy = $('<div id="tooltipsy' + base.random + '">').appendTo('body').css({position: 'absolute', zIndex: '999'}).hide();
-            base.$tip = $('<div class="' + base.settings.className + '">').appendTo(base.$tipsy).html(base.settings.content != '' ? base.settings.content : base.title);
+            base.$tip = $('<div class="' + base.settings.className + '">').appendTo(base.$tipsy);
+            base.$tip.data('rootel', base.$el);
+            base.$tip.html(base.settings.content != '' ? base.settings.content : base.title);
         };
 
         base.init();
