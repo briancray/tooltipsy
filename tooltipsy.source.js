@@ -15,7 +15,6 @@
     $.tooltipsy = function (el, options) {
         this.options = options;
         this.$el = $(el);
-        this.el = el;
         this.random = parseInt(Math.random()*10000);
         this.ready = false;
         this.shown = false;
@@ -76,7 +75,7 @@
                         else {
                             return pos.left + base.$el.outerWidth() + base.settings.offset[0];
                         }
-                    })(base.$el.offset()),
+                    })(base.offset(base.$el[0])),
                     (function (pos) {
                         if (base.settings.offset[1] < 0) {
                             return pos.top - Math.abs(base.settings.offset[1]) - base.height;
@@ -87,7 +86,7 @@
                         else {
                             return pos.top + base.$el.outerHeight() + base.settings.offset[1];
                         }
-                    })(base.$el.offset())
+                    })(base.offset(base.$el[0]))
                 ];
             }
             base.$tipsy.css({top: tip_position[1] + 'px', left: tip_position[0] + 'px'});
@@ -115,6 +114,17 @@
         this.$tip.data('rootel', this.$el);
         this.$tip.html(this.settings.content != '' ? this.settings.content : this.title);
     };
+
+    $.tooltipsy.prototype.offset = function (el) {
+        var ol = ot = 0;
+        if (el.offsetParent) {
+            do {
+                ol += el.offsetLeft;
+                ot += el.offsetTop;
+            } while (el = el.offsetParent);
+        }
+        return {left : ol, top : ot};
+    }
 
     $.tooltipsy.prototype.defaults = {
         alignTo: 'element',
