@@ -8,6 +8,7 @@ Option quick reference:
 - content: HTML or text content of tooltip. Defaults to "" (empty string), which pulls content from target element's title attribute
 - show: function(event, tooltip) to show the tooltip. Defaults to a show(100) effect
 - hide: function(event, tooltip) to hide the tooltip. Defaults to a fadeOut(100) effect
+- delay: A delay in milliseconds before showing a tooltip. Set to 0 for no delay. Defaults to 200
 - css: object containing CSS properties and values. Defaults to {} to use stylesheet for styles
 - className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
 
