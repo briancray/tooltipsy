@@ -15,6 +15,8 @@
     $.tooltipsy = function (el, options) {
         this.options = options;
         this.$el = $(el);
+        this.title = this.$el.attr('title') || '';
+        this.$el.attr('title', '');
         this.random = parseInt(Math.random()*10000);
         this.ready = false;
         this.shown = false;
@@ -107,8 +109,6 @@
 
     $.tooltipsy.prototype.readify = function () {
         this.ready = true;
-        this.title = this.$el.attr('title') || '';
-        this.$el.attr('title', '');
         this.$tipsy = $('<div id="tooltipsy' + this.random + '">').appendTo('body').css({position: 'absolute', zIndex: '999'}).hide();
         this.$tip = $('<div class="' + this.settings.className + '">').appendTo(this.$tipsy);
         this.$tip.data('rootel', this.$el);
