@@ -78,7 +78,7 @@
             base.height = base.$tipsy.outerHeight();
         }
 
-        if (base.settings.alignTo == 'cursor') {
+        if (base.settings.alignTo === 'cursor') {
             var tip_position = [e.pageX + base.settings.offset[0], e.pageY + base.settings.offset[1]];
             if(tip_position[0] + base.width > $(window).width()) {
                 var tip_css = {top: tip_position[1] + 'px', right: tip_position[0] + 'px', left: 'auto'};
@@ -93,7 +93,7 @@
                     if (base.settings.offset[0] < 0) {
                         return pos.left - Math.abs(base.settings.offset[0]) - base.width;
                     }
-                    else if (base.settings.offset[0] == 0) {
+                    else if (base.settings.offset[0] === 0) {
                         return pos.left - ((base.width - base.$el.outerWidth()) / 2);
                     }
                     else {
@@ -104,7 +104,7 @@
                     if (base.settings.offset[1] < 0) {
                         return pos.top - Math.abs(base.settings.offset[1]) - base.height;
                     }
-                    else if (base.settings.offset[1] == 0) {
+                    else if (base.settings.offset[1] === 0) {
                         return pos.top - ((base.height - base.$el.outerHeight()) / 2);
                     }
                     else {
@@ -120,9 +120,9 @@
     $.tooltipsy.prototype.leave = function (e) {
         var base = this;
 
-        if (e.relatedTarget == base.$tip[0]) {
+        if (e.relatedTarget === base.$tip[0]) {
             base.$tip.bind('mouseleave', function (e) {
-                if (e.relatedTarget == base.$el[0]) {
+                if (e.relatedTarget === base.$el[0]) {
                     return;
                 }
                 base.settings.hide(e, base.$tipsy.stop(true, true));
@@ -134,10 +134,9 @@
 
     $.tooltipsy.prototype.readify = function () {
         this.ready = true;
-        this.$tipsy = $('<div id="tooltipsy' + this.random + '">').appendTo('body').css({position: 'absolute', zIndex: '999'}).hide();
-        this.$tip = $('<div class="' + this.settings.className + '">').appendTo(this.$tipsy);
+        this.$tipsy = $('<div id="tooltipsy' + this.random + '" style="position:absolute;z-index:2147483647;display:none">').appendTo('body');
+        this.$tip = $('<div class="' + this.settings.className + '">').appendTo(this.$tipsy).html(this.settings.content != '' ? this.settings.content : this.title);
         this.$tip.data('rootel', this.$el);
-        this.$tip.html(this.settings.content != '' ? this.settings.content : this.title);
     };
 
     $.tooltipsy.prototype.offset = function (el) {
