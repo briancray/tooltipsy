@@ -143,8 +143,10 @@
         var ol = ot = 0;
         if (el.offsetParent) {
             do {
-                ol += el.offsetLeft;
-                ot += el.offsetTop;
+                if (el.tagName != 'BODY') {
+                    ol += el.offsetLeft - el.scrollLeft;
+                    ot += el.offsetTop - el.scrollTop;
+                }
             } while (el = el.offsetParent);
         }
         return {left : ol, top : ot};
