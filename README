@@ -31,6 +31,8 @@ OPTION QUICK REFERENCE:
 - delay: A delay in milliseconds before showing a tooltip. Set to 0 for no delay. Defaults to 200
 - css: object containing CSS properties and values. Defaults to {} to use stylesheet for styles
 - className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
+- showEvent: Set a custom event to bind the show function. Defaults to mouseenter
+- hideEvent: Set a custom event to bind the show function. Defaults to mouseleave
 
 OTHER GREAT THINGS TO KNOW:
 

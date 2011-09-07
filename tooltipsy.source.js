@@ -1,14 +1,16 @@
 /* tooltipsy by Brian Cray
  * Lincensed under GPL2 - http://www.gnu.org/licenses/gpl-2.0.html
  * Option quick reference:
- *  - alignTo: "element" or "cursor" (Defaults to "element")
- *  - offset: Tooltipsy distance from element or mouse cursor, dependent on alignTo setting. Set as array [x, y] (Defaults to [0, -1])
- *  - content: HTML or text content of tooltip. Defaults to "" (empty string), which pulls content from target element's title attribute
- *  - show: function(event, tooltip) to show the tooltip. Defaults to a show(100) effect
- *  - hide: function(event, tooltip) to hide the tooltip. Defaults to a fadeOut(100) effect
- *  - delay: A delay in milliseconds before showing a tooltip. Set to 0 for no delay. Defaults to 200
- *  - css: object containing CSS properties and values. Defaults to {} to use stylesheet for styles
- *  - className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
+ * - alignTo: "element" or "cursor" (Defaults to "element")
+ * - offset: Tooltipsy distance from element or mouse cursor, dependent on alignTo setting. Set as array [x, y] (Defaults to [0, -1])
+ * - content: HTML or text content of tooltip. Defaults to "" (empty string), which pulls content from target element's title attribute
+ * - show: function(event, tooltip) to show the tooltip. Defaults to a show(100) effect
+ * - hide: function(event, tooltip) to hide the tooltip. Defaults to a fadeOut(100) effect
+ * - delay: A delay in milliseconds before showing a tooltip. Set to 0 for no delay. Defaults to 200
+ * - css: object containing CSS properties and values. Defaults to {} to use stylesheet for styles
+ * - className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
+ * - showEvent: Set a custom event to bind the show function. Defaults to mouseenter
+ * - hideEvent: Set a custom event to bind the show function. Defaults to mouseleave
  * More information visit http://tooltipsy.com/
  */
  
