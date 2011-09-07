@@ -39,7 +39,7 @@
             base.readify(); 
         }
         
-        base.$el.bind('mouseenter', function (e) {
+        base.$el.bind(base.settings.showEvent, function (e) {
             if (base.settings.delay > 0) {
                 base.delaytimer = window.setTimeout(function () {
                     base.enter(e);
@@ -48,7 +48,7 @@
             else {
                 base.enter(e);
             }
-        }).bind('mouseleave', function (e) {
+        }).bind(base.settings.hideEvent, function (e) {
             window.clearTimeout(base.delaytimer);
             base.delaytimer = null;
             base.leave(e);
@@ -150,7 +150,11 @@
             } while (el = el.offsetParent);
         }
         return {left : ol, top : ot};
-    }
+    };
+
+    $.tooltipsy.prototype.destroy = function () {
+        this.$tispy.remove();
+    };
 
     $.tooltipsy.prototype.defaults = {
         alignTo: 'element',
@@ -164,7 +168,9 @@
         },
         css: {},
         className: 'tooltipsy',
-        delay: 200
+        delay: 200,
+        showEvent: 'mouseenter',
+        hideEvent: 'mouseleave'
     };
 
     $.fn.tooltipsy = function(options) {

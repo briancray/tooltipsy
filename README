@@ -2,7 +2,27 @@ tooltipsy by Brian Cray
 
 Lincensed under GPL2 - http://www.gnu.org/licenses/gpl-2.0.html
 
-Option quick reference:
+HOW TO (THE EASY METHOD):
+
+1. Identify the HTML element that will trigger a tooltip, such as:
+    <a href="#">Foobar</a>
+2. Add a class name and title to the element
+    <a href="#" class="hastip" title="I am the tooltip text">Foobar</a>
+3. Link to it with jQuery
+    $('.hastip').tooltipsy();
+4. Style it with CSS however you like, for example:
+    .tooltipsy
+    {
+        padding: 10px;
+        max-width: 200px;
+        color: #303030;
+        background-color: #f5f5b5;
+        border: 1px solid #deca7e;
+    }
+5. Enjoy lovely tooltips
+
+OPTION QUICK REFERENCE:
+
 - alignTo: "element" or "cursor" (Defaults to "element")
 - offset: Tooltipsy distance from element or mouse cursor, dependent on alignTo setting. Set as array [x, y] (Defaults to [0, -1])
 - content: HTML or text content of tooltip. Defaults to "" (empty string), which pulls content from target element's title attribute
@@ -12,4 +32,21 @@ Option quick reference:
 - css: object containing CSS properties and values. Defaults to {} to use stylesheet for styles
 - className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
 
-More information visit http://tooltipsy.com/
+OTHER GREAT THINGS TO KNOW:
+
+- You can destroy the tooltip with:
+    $('.hastip').data('tooltip').destroy();
+        ^ make sure that is the original element you attached tooltipsy to
+
+- You can use ajax, for example:
+    $('.hastip').tooltipsy({
+        content: function () {
+            var $el = $(this);
+            $.get('api.php', function (data) {
+                $el.html(data).show();
+            });
+            return 'Fallback content';
+        }
+    });
+
+MORE INFORMATION VISIT http://tooltipsy.com/
