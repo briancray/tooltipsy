@@ -139,7 +139,9 @@
         this.$tipsy = $('<div id="tooltipsy' + this.random + '" style="position:absolute;z-index:2147483647;display:none">').appendTo('body');
         this.$tip = $('<div class="' + this.settings.className + '">').appendTo(this.$tipsy);
         this.$tip.data('rootel', this.$el);
-        this.$tip.html(this.settings.content != '' ? (typeof this.settings.content == 'string' ? this.settings.content : this.settings.content(this.$el, this.$tip)) : this.title);
+        var e = this.$el;
+        var t = this.$tip;
+        this.$tip.html(this.settings.content != '' ? (typeof this.settings.content == 'string' ? this.settings.content : this.settings.content(e, t)) : this.title);
     };
 
     $.tooltipsy.prototype.offset = function (el) {
