@@ -11,6 +11,10 @@
  * - className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
  * - showEvent: Set a custom event to bind the show function. Defaults to mouseenter
  * - hideEvent: Set a custom event to bind the show function. Defaults to mouseleave
+ * Method quick reference:
+ * - $('element').data('tooltipsy').show(): Force the tooltip to show
+ * - $('element').data('tooltipsy').hide(): Force the tooltip to hide
+ * - $('element').data('tooltipsy').destroy(): Remove tooltip from DOM
  * More information visit http://tooltipsy.com/
  */
  
@@ -44,20 +48,20 @@
         base.$el.bind(base.settings.showEvent, function (e) {
             if (base.settings.delay > 0) {
                 base.delaytimer = window.setTimeout(function () {
-                    base.enter(e);
+                    base.show(e);
                 }, base.settings.delay);
             }
             else {
-                base.enter(e);
+                base.show(e);
             }
         }).bind(base.settings.hideEvent, function (e) {
             window.clearTimeout(base.delaytimer);
             base.delaytimer = null;
-            base.leave(e);
+            base.hide(e);
         });
     };
 
-    $.tooltipsy.prototype.enter = function (e) {
+    $.tooltipsy.prototype.show = function (e) {
         var base = this;
 
         if (base.ready === false) {
@@ -80,7 +84,7 @@
             base.height = base.$tipsy.outerHeight();
         }
 
-        if (base.settings.alignTo === 'cursor') {
+        if (base.settings.alignTo === 'cursor' && e) {
             var tip_position = [e.pageX + base.settings.offset[0], e.pageY + base.settings.offset[1]];
             if(tip_position[0] + base.width > $(window).width()) {
                 var tip_css = {top: tip_position[1] + 'px', right: tip_position[0] + 'px', left: 'auto'};
@@ -119,10 +123,10 @@
         base.settings.show(e, base.$tipsy.stop(true, true));
     };
 
-    $.tooltipsy.prototype.leave = function (e) {
+    $.tooltipsy.prototype.hide = function (e) {
         var base = this;
 
-        if (e.relatedTarget === base.$tip[0]) {
+        if (e && e.relatedTarget === base.$tip[0]) {
             base.$tip.bind('mouseleave', function (e) {
                 if (e.relatedTarget === base.$el[0]) {
                     return;
@@ -159,6 +163,7 @@
 
     $.tooltipsy.prototype.destroy = function () {
         this.$tispy.remove();
+        $.removeData(this.$el, 'tooltipsy');
     };
 
     $.tooltipsy.prototype.defaults = {

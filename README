@@ -27,25 +27,26 @@ OPTION QUICK REFERENCE:
 - offset: Tooltipsy distance from element or mouse cursor, dependent on alignTo setting. Set as array [x, y] (Defaults to [0, -1])
 - content: HTML or text content of tooltip. Defaults to "" (empty string), which pulls content from target element's title attribute
 - show: function(event, tooltip) to show the tooltip. Defaults to a show(100) effect
+- showEvent: Set a custom event to bind the show function. Defaults to mouseenter
 - hide: function(event, tooltip) to hide the tooltip. Defaults to a fadeOut(100) effect
+- hideEvent: Set a custom event to bind the show function. Defaults to mouseleave
 - delay: A delay in milliseconds before showing a tooltip. Set to 0 for no delay. Defaults to 200
 - css: object containing CSS properties and values. Defaults to {} to use stylesheet for styles
 - className: DOM class for styling tooltips with CSS. Defaults to "tooltipsy"
-- showEvent: Set a custom event to bind the show function. Defaults to mouseenter
-- hideEvent: Set a custom event to bind the show function. Defaults to mouseleave
+
+METHOD QUICK REFERENCE:
+
+- $('.hastip').data('tooltipsy').show(): Force the tooltip to show
+- $('.hastip').data('tooltipsy').hide(): Force the tooltip to hide
+- $('.hastip').data('tooltipsy').destroy(): Remove the tooltip from DOM
 
 OTHER GREAT THINGS TO KNOW:
 
-- You can destroy the tooltip with:
-    $('.hastip').data('tooltip').destroy();
-        ^ make sure that is the original element you attached tooltipsy to
-
 - You can use ajax, for example:
     $('.hastip').tooltipsy({
-        content: function () {
-            var $el = $(this);
+        content: function ($el, $tip) {
             $.get('api.php', function (data) {
-                $el.html(data).show();
+                $el.html(data);
             });
             return 'Fallback content';
         }
