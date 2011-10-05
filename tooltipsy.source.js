@@ -162,7 +162,7 @@
     };
 
     $.tooltipsy.prototype.destroy = function () {
-        this.$tispy.remove();
+        this.$tipsy.remove();
         $.removeData(this.$el, 'tooltipsy');
     };
 
