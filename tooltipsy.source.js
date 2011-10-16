@@ -126,6 +126,10 @@
     $.tooltipsy.prototype.hide = function (e) {
         var base = this;
 
+        if (base.ready === false) {
+            return;
+        }
+
         if (e && e.relatedTarget === base.$tip[0]) {
             base.$tip.bind('mouseleave', function (e) {
                 if (e.relatedTarget === base.$el[0]) {
