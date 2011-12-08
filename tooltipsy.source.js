@@ -44,21 +44,39 @@
         if (typeof base.settings.content === 'function') {
             base.readify(); 
         }
-        
-        base.$el.bind(base.settings.showEvent, function (e) {
-            if (base.settings.delay > 0) {
-                base.delaytimer = window.setTimeout(function () {
+
+        if (base.settings.showEvent === base.settings.hideEvent) {
+            base.$el.toggle(function (e) {
+                if (base.settings.delay > 0) {
+                    base.delaytimer = window.setTimeout(function () {
+                        base.show(e);
+                    }, base.settings.delay);
+                }
+                else {
                     base.show(e);
-                }, base.settings.delay);
-            }
-            else {
-                base.show(e);
-            }
-        }).bind(base.settings.hideEvent, function (e) {
-            window.clearTimeout(base.delaytimer);
-            base.delaytimer = null;
-            base.hide(e);
-        });
+                }
+            }, function (e) {
+                window.clearTimeout(base.delaytimer);
+                base.delaytimer = null;
+                base.hide(e);
+            });
+        }
+        else {
+            base.$el.bind(base.settings.showEvent, function (e) {
+                if (base.settings.delay > 0) {
+                    base.delaytimer = window.setTimeout(function () {
+                        base.show(e);
+                    }, base.settings.delay);
+                }
+                else {
+                    base.show(e);
+                }
+            }).bind(base.settings.hideEvent, function (e) {
+                window.clearTimeout(base.delaytimer);
+                base.delaytimer = null;
+                base.hide(e);
+            });
+        }
     };
 
     $.tooltipsy.prototype.show = function (e) {
