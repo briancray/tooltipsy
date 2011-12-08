@@ -45,8 +45,9 @@
             base.readify(); 
         }
 
-        if (base.settings.showEvent === base.settings.hideEvent) {
+        if (base.settings.showEvent === base.settings.hideEvent && base.settings.showEvent === 'click') {
             base.$el.toggle(function (e) {
+                e.preventDefault();
                 if (base.settings.delay > 0) {
                     base.delaytimer = window.setTimeout(function () {
                         base.show(e);
@@ -56,6 +57,7 @@
                     base.show(e);
                 }
             }, function (e) {
+                e.preventDefault();
                 window.clearTimeout(base.delaytimer);
                 base.delaytimer = null;
                 base.hide(e);
