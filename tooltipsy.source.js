@@ -108,7 +108,7 @@
                 }
                 return s;
             })(base.settings.css) > 0) {
-                base.$tip.css(base.settings.css);
+                this.$tipsy.css(base.settings.css);
             }
             base.width = base.$tipsy.outerWidth();
             base.height = base.$tipsy.outerHeight();
@@ -160,8 +160,8 @@
             return;
         }
 
-        if (e && e.relatedTarget === base.$tip[0]) {
-            base.$tip.bind('mouseleave', function (e) {
+        if (e && e.relatedTarget === this.$tipsy[0]) {
+            this.$tipsy.bind('mouseleave', function (e) {
                 if (e.relatedTarget === base.$el[0]) {
                     return;
                 }
@@ -174,12 +174,11 @@
 
     $.tooltipsy.prototype.readify = function () {
         this.ready = true;
-        this.$tipsy = $('<div id="tooltipsy' + this.random + '" style="position:absolute;z-index:2147483647;display:none">').appendTo('body');
-        this.$tip = $('<div class="' + this.settings.className + '">').appendTo(this.$tipsy);
-        this.$tip.data('rootel', this.$el);
+        this.$tipsy = $('<div id="tooltipsy' + this.random + '" class="' + this.settings.className + '" style="position:absolute;z-index:2147483647;display:none">').appendTo('body');
+        this.$tipsy.data('rootel', this.$el);
         var e = this.$el;
-        var t = this.$tip;
-        this.$tip.html(this.settings.content != '' ? (typeof this.settings.content == 'string' ? this.settings.content : this.settings.content(e, t)) : this.title);
+        var t = this.$tipsy;
+        this.$tipsy.html(this.settings.content != '' ? (typeof this.settings.content == 'string' ? this.settings.content : this.settings.content(e, t)) : this.title);
     };
 
     $.tooltipsy.prototype.offset = function (el) {
