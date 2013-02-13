@@ -191,8 +191,10 @@
         },
 
         destroy: function () {
-            this.$tipsy.remove();
-            $.removeData(this.$el, 'tooltipsy');
+            if (this.$tipsy) {
+                this.$tipsy.remove();
+                $.removeData(this.$el, 'tooltipsy');
+            }
         },
 
         defaults: {
