@@ -119,7 +119,7 @@
             }
 
             if (settings.alignTo === 'cursor' && e) {
-                var tip_position = [e.pageX + settings.offset[0], e.pageY + settings.offset[1]];
+                var tip_position = [e.clientX + settings.offset[0], e.clientY + settings.offset[1]];
                 if (tip_position[0] + base.width > $(window).width()) {
                     var tip_css = {top: tip_position[1] + 'px', right: tip_position[0] + 'px', left: 'auto'};
                 }
