@@ -35,186 +35,182 @@
         this.init();
     };
 
-    $.tooltipsy.prototype.init = function () {
-        var base = this;
+    $.tooltipsy.prototype = {
+        init: function () {
+            var base = this,
+                settings,
+                $el = base.$el,
+                el = $el[0];
 
-        base.settings = $.extend({}, base.defaults, base.options);
-        base.settings.delay = parseInt(base.settings.delay);
+            base.settings = settings = $.extend({}, base.defaults, base.options);
+            settings.delay = +settings.delay;
 
-        if (typeof base.settings.content === 'function') {
-            base.readify(); 
-        }
-
-        if (base.settings.showEvent === base.settings.hideEvent && base.settings.showEvent === 'click') {
-            base.$el.toggle(function (e) {
-                if (base.settings.showEvent === 'click' && base.$el[0].tagName == 'A') {
-                    e.preventDefault();
-                }
-                if (base.settings.delay > 0) {
-                    base.delaytimer = window.setTimeout(function () {
-                        base.show(e);
-                    }, base.settings.delay);
-                }
-                else {
-                    base.show(e);
-                }
-            }, function (e) {
-                if (base.settings.showEvent === 'click' && base.$el[0].tagName == 'A') {
-                    e.preventDefault();
-                }
-                window.clearTimeout(base.delaytimer);
-                base.delaytimer = null;
-                base.hide(e);
-            });
-        }
-        else {
-            base.$el.bind(base.settings.showEvent, function (e) {
-                if (base.settings.showEvent === 'click' && base.$el[0].tagName == 'A') {
-                    e.preventDefault();
-                }
-                if (base.settings.delay > 0) {
-                    base.delaytimer = window.setTimeout(function () {
-                        base.show(e);
-                    }, base.settings.delay);
-                }
-                else {
-                    base.show(e);
-                }
-            }).bind(base.settings.hideEvent, function (e) {
-                if (base.settings.showEvent === 'click' && base.$el[0].tagName == 'A') {
-                    e.preventDefault();
-                }
-                window.clearTimeout(base.delaytimer);
-                base.delaytimer = null;
-                base.hide(e);
-            });
-        }
-    };
-
-    $.tooltipsy.prototype.show = function (e) {
-        var base = this;
-
-        if (base.ready === false) {
-            base.readify();
-        }
-
-        if (base.shown === false) {
-            if ((function (o) {
-                var s = 0, k;
-                for (k in o) {
-                    if (o.hasOwnProperty(k)) {
-                        s++;
-                    }
-                }
-                return s;
-            })(base.settings.css) > 0) {
-                base.$tip.css(base.settings.css);
+            if (typeof settings.content === 'function') {
+                base.readify(); 
             }
-            base.width = base.$tipsy.outerWidth();
-            base.height = base.$tipsy.outerHeight();
-        }
 
-        if (base.settings.alignTo === 'cursor' && e) {
-            var tip_position = [e.pageX + base.settings.offset[0], e.pageY + base.settings.offset[1]];
-            if(tip_position[0] + base.width > $(window).width()) {
-                var tip_css = {top: tip_position[1] + 'px', right: tip_position[0] + 'px', left: 'auto'};
+            if (settings.showEvent === settings.hideEvent && settings.showEvent === 'click') {
+                $el.toggle(function (e) {
+                    if (settings.showEvent === 'click' && el.tagName == 'A') {
+                        e.preventDefault();
+                    }
+                    if (settings.delay > 0) {
+                        base.delaytimer = window.setTimeout(function () {
+                            base.show(e);
+                        }, settings.delay);
+                    }
+                    else {
+                        base.show(e);
+                    }
+                }, function (e) {
+                    if (settings.showEvent === 'click' && el.tagName == 'A') {
+                        e.preventDefault();
+                    }
+                    window.clearTimeout(base.delaytimer);
+                    base.delaytimer = null;
+                    base.hide(e);
+                });
             }
             else {
-                var tip_css = {top: tip_position[1] + 'px', left: tip_position[0] + 'px', right: 'auto'};
+                $el.bind(settings.showEvent, function (e) {
+                    if (settings.showEvent === 'click' && el.tagName == 'A') {
+                        e.preventDefault();
+                    }
+                    base.delaytimer = window.setTimeout(function () {
+                        base.show(e);
+                    }, settings.delay || 0);
+                }).bind(settings.hideEvent, function (e) {
+                    if (settings.showEvent === 'click' && el.tagName == 'A') {
+                        e.preventDefault();
+                    }
+                    window.clearTimeout(base.delaytimer);
+                    base.delaytimer = null;
+                    base.hide(e);
+                });
             }
-        }
-        else {
-            var tip_position = [
-                (function (pos) {
-                    if (base.settings.offset[0] < 0) {
-                        return pos.left - Math.abs(base.settings.offset[0]) - base.width;
-                    }
-                    else if (base.settings.offset[0] === 0) {
-                        return pos.left - ((base.width - base.$el.outerWidth()) / 2);
-                    }
-                    else {
-                        return pos.left + base.$el.outerWidth() + base.settings.offset[0];
-                    }
-                })(base.offset(base.$el[0])),
-                (function (pos) {
-                    if (base.settings.offset[1] < 0) {
-                        return pos.top - Math.abs(base.settings.offset[1]) - base.height;
-                    }
-                    else if (base.settings.offset[1] === 0) {
-                        return pos.top - ((base.height - base.$el.outerHeight()) / 2);
-                    }
-                    else {
-                        return pos.top + base.$el.outerHeight() + base.settings.offset[1];
-                    }
-                })(base.offset(base.$el[0]))
-            ];
-        }
-        base.$tipsy.css({top: tip_position[1] + 'px', left: tip_position[0] + 'px'});
-        base.settings.show(e, base.$tipsy.stop(true, true));
-    };
-
-    $.tooltipsy.prototype.hide = function (e) {
-        var base = this;
-
-        if (base.ready === false) {
-            return;
-        }
-
-        if (e && e.relatedTarget === base.$tip[0]) {
-            base.$tip.bind('mouseleave', function (e) {
-                if (e.relatedTarget === base.$el[0]) {
-                    return;
-                }
-                base.settings.hide(e, base.$tipsy.stop(true, true));
-            });
-            return;
-        }
-        base.settings.hide(e, base.$tipsy.stop(true, true));
-    };
-
-    $.tooltipsy.prototype.readify = function () {
-        this.ready = true;
-        this.$tipsy = $('<div id="tooltipsy' + this.random + '" style="position:absolute;z-index:2147483647;display:none">').appendTo('body');
-        this.$tip = $('<div class="' + this.settings.className + '">').appendTo(this.$tipsy);
-        this.$tip.data('rootel', this.$el);
-        var e = this.$el;
-        var t = this.$tip;
-        this.$tip.html(this.settings.content != '' ? (typeof this.settings.content == 'string' ? this.settings.content : this.settings.content(e, t)) : this.title);
-    };
-
-    $.tooltipsy.prototype.offset = function (el) {
-        var ol = ot = 0;
-        if (el.offsetParent) {
-            do {
-                if (el.tagName != 'BODY') {
-                    ol += el.offsetLeft - el.scrollLeft;
-                    ot += el.offsetTop - el.scrollTop;
-                }
-            } while (el = el.offsetParent);
-        }
-        return {left : ol, top : ot};
-    };
-
-    $.tooltipsy.prototype.destroy = function () {
-        this.$tipsy.remove();
-        $.removeData(this.$el, 'tooltipsy');
-    };
-
-    $.tooltipsy.prototype.defaults = {
-        alignTo: 'element',
-        offset: [0, -1],
-        content: '',
-        show: function (e, $el) {
-            $el.fadeIn(100);
         },
-        hide: function (e, $el) {
-            $el.fadeOut(100);
+
+        show: function (e) {
+            if (this.ready === false) {
+                this.readify();
+            }
+
+            var base = this,
+                settings = base.settings,
+                $tipsy = base.$tipsy,
+                $el = base.$el,
+                el = $el[0],
+                offset = base.offset(el);
+
+            if (base.shown === false) {
+                if ((function (o) {
+                    var s = 0, k;
+                    for (k in o) {
+                        if (o.hasOwnProperty(k)) {
+                            s++;
+                        }
+                    }
+                    return s;
+                })(settings.css) > 0) {
+                    base.$tip.css(settings.css);
+                }
+                base.width = $tipsy.outerWidth();
+                base.height = $tipsy.outerHeight();
+            }
+
+            if (settings.alignTo === 'cursor' && e) {
+                var tip_position = [e.pageX + settings.offset[0], e.pageY + settings.offset[1]];
+                if (tip_position[0] + base.width > $(window).width()) {
+                    var tip_css = {top: tip_position[1] + 'px', right: tip_position[0] + 'px', left: 'auto'};
+                }
+                else {
+                    var tip_css = {top: tip_position[1] + 'px', left: tip_position[0] + 'px', right: 'auto'};
+                }
+            }
+            else {
+                var tip_position = [
+                    (function () {
+                        if (settings.offset[0] < 0) {
+                            return offset.left - Math.abs(settings.offset[0]) - base.width;
+                        }
+                        else if (settings.offset[0] === 0) {
+                            return offset.left - ((base.width - $el.outerWidth()) / 2);
+                        }
+                        else {
+                            return offset.left + $el.outerWidth() + settings.offset[0];
+                        }
+                    })(),
+                    (function () {
+                        if (settings.offset[1] < 0) {
+                            return offset.top - Math.abs(settings.offset[1]) - base.height;
+                        }
+                        else if (settings.offset[1] === 0) {
+                            return offset.top - ((base.height - base.$el.outerHeight()) / 2);
+                        }
+                        else {
+                            return offset.top + base.$el.outerHeight() + settings.offset[1];
+                        }
+                    })()
+                ];
+            }
+            $tipsy.css({top: tip_position[1] + 'px', left: tip_position[0] + 'px'});
+            base.settings.show(e, $tipsy.stop(true, true));
         },
-        css: {},
-        className: 'tooltipsy',
-        delay: 200,
-        showEvent: 'mouseenter',
-        hideEvent: 'mouseleave'
+
+        hide: function (e) {
+            var base = this;
+
+            if (base.ready === false) {
+                return;
+            }
+
+            if (e && e.relatedTarget === base.$tip[0]) {
+                base.$tip.bind('mouseleave', function (e) {
+                    if (e.relatedTarget === base.$el[0]) {
+                        return;
+                    }
+                    base.settings.hide(e, base.$tipsy.stop(true, true));
+                });
+                return;
+            }
+            base.settings.hide(e, base.$tipsy.stop(true, true));
+        },
+
+        readify: function () {
+            this.ready = true;
+            this.$tipsy = $('<div id="tooltipsy' + this.random + '" style="position:fixed;z-index:2147483647;display:none">').appendTo('body');
+            this.$tip = $('<div class="' + this.settings.className + '">').appendTo(this.$tipsy);
+            this.$tip.data('rootel', this.$el);
+            var e = this.$el;
+            var t = this.$tip;
+            this.$tip.html(this.settings.content != '' ? (typeof this.settings.content == 'string' ? this.settings.content : this.settings.content(e, t)) : this.title);
+        },
+
+        offset: function (el) {
+            return this.$el[0].getBoundingClientRect();
+        },
+
+        destroy: function () {
+            this.$tipsy.remove();
+            $.removeData(this.$el, 'tooltipsy');
+        },
+
+        defaults: {
+            alignTo: 'element',
+            offset: [0, -1],
+            content: '',
+            show: function (e, $el) {
+                $el.fadeIn(100);
+            },
+            hide: function (e, $el) {
+                $el.fadeOut(100);
+            },
+            css: {},
+            className: 'tooltipsy',
+            delay: 200,
+            showEvent: 'mouseenter',
+            hideEvent: 'mouseleave'
+        }
     };
 
     $.fn.tooltipsy = function(options) {
