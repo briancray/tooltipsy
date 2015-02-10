@@ -17,7 +17,7 @@
  * - $('element').data('tooltipsy').destroy(): Remove tooltip from DOM
  * More information visit http://tooltipsy.com/
  */
- 
+
 (function($){
     $.tooltipsy = function (el, options) {
         this.options = options;
@@ -46,14 +46,16 @@
             settings.delay = +settings.delay;
 
             if (typeof settings.content === 'function') {
-                base.readify(); 
+                base.readify();
             }
 
             if (settings.showEvent === settings.hideEvent && settings.showEvent === 'click') {
                 $el.toggle(function (e) {
+                    base.beforeShow(e);
                     if (settings.showEvent === 'click' && el.tagName == 'A') {
                         e.preventDefault();
                     }
+
                     if (settings.delay > 0) {
                         base.delaytimer = window.setTimeout(function () {
                             base.show(e);
@@ -73,9 +75,11 @@
             }
             else {
                 $el.bind(settings.showEvent, function (e) {
+                    base.beforeShow(e);
                     if (settings.showEvent === 'click' && el.tagName == 'A') {
                         e.preventDefault();
                     }
+
                     base.delaytimer = window.setTimeout(function () {
                         base.show(e);
                     }, settings.delay || 0);
@@ -91,9 +95,6 @@
         },
 
         show: function (e) {
-            if (this.ready === false) {
-                this.readify();
-            }
 
             var base = this,
                 settings = base.settings,
@@ -104,14 +105,14 @@
 
             if (base.shown === false) {
                 if ((function (o) {
-                    var s = 0, k;
-                    for (k in o) {
-                        if (o.hasOwnProperty(k)) {
-                            s++;
+                        var s = 0, k;
+                        for (k in o) {
+                            if (o.hasOwnProperty(k)) {
+                                s++;
+                            }
                         }
-                    }
-                    return s;
-                })(settings.css) > 0) {
+                        return s;
+                    })(settings.css) > 0) {
                     base.$tip.css(settings.css);
                 }
                 base.width = $tipsy.outerWidth();
@@ -155,6 +156,17 @@
             }
             $tipsy.css({top: tip_position[1] + 'px', left: tip_position[0] + 'px'});
             base.settings.show(e, $tipsy.stop(true, true));
+        },
+
+        beforeShow: function(e) {
+            if (this.ready === false) {
+                this.readify();
+            }
+
+            var base = this,
+                $tipsy = base.$tipsy;
+
+            base.settings.beforeShow(e, $tipsy);
         },
 
         hide: function (e) {
@@ -203,6 +215,8 @@
             content: '',
             show: function (e, $el) {
                 $el.fadeIn(100);
+            },
+            beforeShow: function (e, $el) {
             },
             hide: function (e, $el) {
                 $el.fadeOut(100);
