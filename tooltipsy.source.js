@@ -197,6 +197,14 @@
             }
         },
 
+        update: function() {
+            this.title = this.$el.attr('title');
+            if(this.$tipsy) {
+                this.$tipsy.remove();
+            }
+            this.ready = false;
+        },
+
         defaults: {
             alignTo: 'element',
             offset: [0, -1],
