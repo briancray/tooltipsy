@@ -1,5 +1,5 @@
 /* tooltipsy by Brian Cray
- * Lincensed under GPL2 - http://www.gnu.org/licenses/gpl-2.0.html
+ * Licensed under GPL2 - http://www.gnu.org/licenses/gpl-2.0.html
  * Option quick reference:
  * - alignTo: "element" or "cursor" (Defaults to "element")
  * - offset: Tooltipsy distance from element or mouse cursor, dependent on alignTo setting. Set as array [x, y] (Defaults to [0, -1])
