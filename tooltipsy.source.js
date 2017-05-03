@@ -191,10 +191,17 @@
         },
 
         destroy: function () {
-            if (this.$tipsy) {
+            if(this.$tipsy) {
                 this.$tipsy.remove();
-                $.removeData(this.$el, 'tooltipsy');
             }
+            else {
+                window.clearTimeout(this.delaytimer);
+                this.delaytimer=null;
+            }
+            this.$el.removeData('tooltipsy');
+            this.$el.off(this.settings.showEvent);
+            this.$el.off(this.settings.hideEvent);
+            this.$el.attr('title',this.title);
         },
 
         update: function() {
@@ -226,6 +233,29 @@
     $.fn.tooltipsy = function(options) {
         return this.each(function() {
             new $.tooltipsy(this, options);
+        });
+    };
+	
+	/**
+     * What is "enhanced"?: initialize only if element was not initialized, useful for ajax-loaded elements
+     */
+    $.fn.tooltipsyEnhancedInit = function() {
+        return this.each(function() {
+            if( $( this ).data('tooltipsy') === undefined ){
+                $( this ).tooltipsy();
+            }
+        });
+    };
+
+    /**
+     * What is "enhanced"?: destroy only if element was initialized, useful for ajax-loaded elements
+     */
+    $.fn.tooltipsyEnhancedDestroy = function() {
+        return this.each(function() {
+            if( $( this ).data('tooltipsy') !== undefined ){
+                $( this ).data('tooltipsy').hide();
+                $( this ).data('tooltipsy').destroy();
+            }
         });
     };
 
