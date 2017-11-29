@@ -1,0 +1,24 @@
+{
+  "name": "tooltipsy",
+  "version": "1.0.0",
+  "description": "jQuery tooltipspy by Brian Cray",
+  "main": "tooltipsy.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/briancray/tooltipsy.git"
+  },
+  "keywords": [
+    "tooltip",
+    "tooltipspy",
+    "jquery"
+  ],
+  "author": "Brian Cray",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/briancray/tooltipsy/issues"
+  },
+  "homepage": "https://github.com/briancray/tooltipsy#readme"
+}
